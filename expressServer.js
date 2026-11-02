@@ -130,6 +130,26 @@ app.put("/edit/:id", (req, res) => {
     book: bookData[bookIndex]
   });
 });
+// Search Book By Title
+app.get("/search/:title", (req, res) => {
+  const title = req.params.title.toLowerCase();
+
+  const book = bookData.filter((book) =>
+    book.title.toLowerCase().includes(title)
+  );
+
+  if (book.length > 0) {
+    res.status(200).json({
+      message: "Book found",
+      book
+    });
+    return;
+  }
+
+  res.status(404).json({
+    message: "Book not found"
+  });
+});
 
 // Delete Book
 app.delete("/delete/:id", (req, res) => {
